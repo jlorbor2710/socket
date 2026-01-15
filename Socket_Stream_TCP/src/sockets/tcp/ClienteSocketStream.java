@@ -15,7 +15,7 @@ public class ClienteSocketStream {
 
             System.out.println("Estableciendo la conexión");
 
-            InetSocketAddress addr = new InetSocketAddress("localhost", 5555);
+            InetSocketAddress addr = new InetSocketAddress("10.0.2.15", 5555);
             clientSocket.connect(addr);
 
             InputStream is = clientSocket.getInputStream();
