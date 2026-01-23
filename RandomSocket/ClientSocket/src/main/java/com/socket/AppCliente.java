@@ -39,7 +39,16 @@ public class AppCliente
         	while((datoRec = entradaSocket.readLine()) != null){
         		intentos++;
                 System.out.println("Intento #" + intentos + ": " + datoRec);
-        		// Leer la consola y enviar al server
+                
+                // Mejora
+                if(datoRec.toLowerCase().contains("adivinado") || datoRec.toLowerCase().contains("correcto")){
+                    System.out.println("¡Felicidades! Número adivinado. Cerrando conexión...");
+                    salida.close();
+                    entradaSocket.close();
+                    entradaConsola.close();
+                    socket.close();
+                    break;
+                }
         		salida.println(entradaConsola.readLine());
         	}
         	
