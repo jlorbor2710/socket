@@ -20,7 +20,7 @@ public class AppCliente
     	
         try {
         	//conectamos con el servidor
-        	Socket socket = new Socket("localhost",PORT);
+        	Socket socket = new Socket("172.21.76.54",PORT);
         	
         	//Para enviar datos al server
         	PrintWriter salida = new PrintWriter(socket.getOutputStream(), true);
@@ -35,12 +35,14 @@ public class AppCliente
         	salida.println(entradaConsola.readLine());
         	
         	String datoRec;
+        	int intentos = 0; // Mejora
         	while((datoRec = entradaSocket.readLine()) != null){
-        		//Mostrar el dato recibido por consola
-        		System.out.println(datoRec);
+        		intentos++;
+                System.out.println("Intento #" + intentos + ": " + datoRec);
         		// Leer la consola y enviar al server
         		salida.println(entradaConsola.readLine());
         	}
+        	
         	
         	
         }catch(UnknownHostException ex) {
