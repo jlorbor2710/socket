@@ -68,7 +68,7 @@ public class AppServerSocket
 		try {
 			int numero = Integer.parseInt(datoRec);
 			
-			// 👇 MEJORA
+			// MEJORA
             if (numero < 1 || numero > 10) {
                 return "<server> El número debe estar entre 1 y 10";
             }
