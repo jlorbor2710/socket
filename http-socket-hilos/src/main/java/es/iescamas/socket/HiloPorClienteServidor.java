@@ -104,22 +104,39 @@ public class HiloPorClienteServidor implements Runnable {
 
             long time = System.currentTimeMillis();
             String fecha = new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date(time));
-
-            String body = "<html>"
-                    + "<head>"
-                    + "<link rel='icon' href='/favicon.ico'>"
-                    + "<title>Programación de Servicios y Procesos</title>"
-                    + "</head>"
-                    + "<body style='background-color: coral;'>"
-                    + "<h3 style='color:blue;'>Servidor OK</h3>"
-                    + "<h1>Hola " + nombre + "</h1>"
-                    + "<p>Path: " + path + "</p>"
-                    + "<p>Server: " + fecha + "</p>"
-                    + "<p>Hilo: " + Thread.currentThread().getName() + "</p>"
-                    + "<p>Cliente IP: " + clientIp + "</p>"
-                    + "<p>Cliente puerto: " + clientPort + "</p>"
-                    + "<p>Remote: " + remote + "</p>"
-                    + "</body></html>";
+            String body; 
+            
+            if (nombre != null && !nombre.isBlank()){
+            	body = "<html>"
+                        + "<head>"
+                        + "<link rel='icon' href='/favicon.ico'>"
+                        + "<title>Programación de Servicios y Procesos</title>"
+                        + "</head>"
+                        + "<body style='background-color: coral;'>"
+                        + "<h3 style='color:blue;'>Servidor OK</h3>"
+                        + "<h1>Hola " + nombre + "</h1>"
+                        + "<p>Path: " + path + "</p>"
+                        + "<p>Server: " + fecha + "</p>"
+                        + "<p>Hilo: " + Thread.currentThread().getName() + "</p>"
+                        + "<p>Cliente IP: " + clientIp + "</p>"
+                        + "<p>Cliente puerto: " + clientPort + "</p>"
+                        + "<p>Remote: " + remote + "</p>"
+                        + "</body></html>";
+            } else {
+            	body = "<html>"
+            	         + "<head>"
+            	         + "<title>Inicio</title>"
+                         + "<body style='background-color: green;'>"
+            	         + "</head>"
+            	         + "<body>"
+            	         + "<h1>Servidor concurrente</h1>"
+            	         + "<a href='/nombre/Ana'>Saludar a Ana</a><br>"
+            	         + "<a href='/nombre/Pepe'>Saludar a Pepe</a><br>"
+            	         + "<a href='/nombre/Lucia'>Saludar a Lucia</a><br>"
+            	         + "<p>Hilo: " + Thread.currentThread().getName() + "</p>"
+            	         + "</body></html>";
+            }
+            
 
             byte[] bodyBytes = body.getBytes(StandardCharsets.UTF_8);
 
