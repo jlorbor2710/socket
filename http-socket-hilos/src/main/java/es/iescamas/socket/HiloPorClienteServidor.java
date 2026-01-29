@@ -85,6 +85,11 @@ public class HiloPorClienteServidor implements Runnable {
                 if (end > start) 
                 	path = requestLine.substring(start, end);
             }
+            String nombre = null;
+            if (path.startsWith("/nombre/")) {
+                nombre = path.substring("/nombre/".length());
+            }
+
 
             // 2) Favicon: servir el fichero real desde resources y salir
             if ("/favicon.ico".equals(path)) {
@@ -107,6 +112,7 @@ public class HiloPorClienteServidor implements Runnable {
                     + "</head>"
                     + "<body style='background-color: coral;'>"
                     + "<h3 style='color:blue;'>Servidor OK</h3>"
+                    + "<h1>Hola " + nombre + "</h1>"
                     + "<p>Path: " + path + "</p>"
                     + "<p>Server: " + fecha + "</p>"
                     + "<p>Hilo: " + Thread.currentThread().getName() + "</p>"
