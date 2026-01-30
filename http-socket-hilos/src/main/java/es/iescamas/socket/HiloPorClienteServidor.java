@@ -89,6 +89,17 @@ public class HiloPorClienteServidor implements Runnable {
             if (path.startsWith("/nombre/")) {
                 nombre = path.substring("/nombre/".length());
             }
+            
+         // Comprobar rutas válidas
+            boolean rutaValida =
+                    "/".equals(path) ||
+                    "/favicon.ico".equals(path) ||
+                    (nombre != null && !nombre.isBlank());
+
+            if (!rutaValida) {
+                send404(out, path);
+            }
+
 
 
             // 2) Favicon: servir el fichero real desde resources y salir
@@ -105,6 +116,9 @@ public class HiloPorClienteServidor implements Runnable {
             long time = System.currentTimeMillis();
             String fecha = new SimpleDateFormat("dd/MM/yy HH:mm:ss").format(new Date(time));
             String body; 
+           
+            
+
             
             if (nombre != null && !nombre.isBlank()){
             	body = "<html>"
@@ -208,4 +222,29 @@ public class HiloPorClienteServidor implements Runnable {
             System.err.println(e);
         }
     }
+    private void send404(OutputStream out, String path) throws IOException {
+        String body =
+            "<html>" +
+            "<head><title>404 Not Found</title></head>" +
+            "<body style='font-family:Arial;background:#fdd;padding:20px'>" +
+            "<h1>404 - Página no encontrada</h1>" +
+            "<p>La ruta <strong>" + path + "</strong> no existe.</p>" +
+            "<a href='/'>Volver al inicio</a>" +
+            "</body>" +
+            "</html>";
+
+        byte[] bodyBytes = body.getBytes(StandardCharsets.UTF_8);
+
+        String headers =
+            "HTTP/1.1 404 Not Found\r\n" +
+            "Content-Type: text/html; charset=UTF-8\r\n" +
+            "Content-Length: " + bodyBytes.length + "\r\n" +
+            "Connection: close\r\n\r\n";
+
+        out.write(headers.getBytes(StandardCharsets.US_ASCII));
+        out.write(bodyBytes);
+        out.flush();
+    }
+
+    
 }
